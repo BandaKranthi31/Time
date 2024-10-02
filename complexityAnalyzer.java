@@ -1,8 +1,10 @@
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 
 public class complexityAnalyzer {
     public static void main(String[] args) {
@@ -33,6 +35,21 @@ public class complexityAnalyzer {
             e.printStackTrace();
             return null;
         }
-        return code.toString();
+        return code.toString().trim();
     }
+
+    private static String timeComplexity(String code){
+        if(matchesPattern(code,"for\\s*\\(.*;.*;.*\\{.*for\\s*\\(.*;.*;.x\\)")){
+            return "O(n ^ 2) {N square}";
+        }
+
+       return "unknown";
+    }
+
+    private static boolean matchesPattern(String code , String pattern){
+        Pattern p = Pattern.compile(pattern,Pattern.DOTALL);
+        Matcher m =p.matcher(code);
+        return m.find();
+    }
+
 }
